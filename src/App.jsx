@@ -4,16 +4,25 @@ const CAT_ENDPOINT_RANDOM_FACT = 'https://catfact.ninja/fact'
 const CAT_PREFIX_IMAGE_URL = 'https://cataas.com/'
 
 export function App () {
-  const [fact, setFact] = useState()
   const [imageUrl, setImageUrl] = useState()
-  useEffect(() => {
+  const [fact, setFact] = useState()
+
+  function getFact () {
     fetch(CAT_ENDPOINT_RANDOM_FACT)
       .then(res => res.json())
       .then(data => {
         const { fact } = data
         setFact(fact)
       })
+  }
+
+  useEffect(() => {
+    getFact()
   }, [])
+
+  function handleButtonClick () {
+    getFact()
+  }
 
   useEffect(() => {
     if (!fact) return
@@ -28,9 +37,10 @@ export function App () {
 
   return (
     <main>
-      <h1>App de Gatos</h1>
+      <h1>Cat's app</h1>
       {fact && <p>{fact}</p>}
       {imageUrl && <img src={`${CAT_PREFIX_IMAGE_URL}${imageUrl}`} alt='A photo of a random cat provided by the Cataas API' />}
+      <button onClick={handleButtonClick}>New fact</button>
     </main>
   )
 }
