@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { getFact, getImage } from './services/facts'
+import { getFact } from './services/facts'
 const CAT_PREFIX_IMAGE_URL = 'https://cataas.com/'
 
-export function App () {
+function useCatImage ({ fact }) {
   const [imageUrl, setImageUrl] = useState()
+  useEffect(() => {
+    if (!fact) return
+    const firstWord = (fact.split(' ')[0])
+    fetch(`https://cataas.com/c/s/${firstWord}?json=true`)
+      .then(res => res.json())
+      .then(data => {
+        const { url } = data
+        setImageUrl(url)
+      })
+  }, [fact])
+  return { imageUrl }
+}
+
+export function App () {
   const [fact, setFact] = useState()
+  const { imageUrl } = useCatImage({ fact })
 
   useEffect(() => {
     getFact().then(fact => setFact(fact))
@@ -15,12 +30,6 @@ export function App () {
     const newFact = await getFact()
     setFact(newFact)
   }
-
-  useEffect(() => {
-    if (!fact) return
-    const firstWord = (fact.split(' ')[0])
-    getImage(firstWord).then(url => setImageUrl(url))
-  }, [fact])
 
   return (
     <main>
