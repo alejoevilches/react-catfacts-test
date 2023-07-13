@@ -12,16 +12,20 @@ export function App () {
       .then(data => {
         const { fact } = data
         setFact(fact)
-        const firstWord = (fact.split(' ')[0])
-
-        fetch(`https://cataas.com/c/s/${firstWord}?json=true`)
-          .then(res => res.json())
-          .then(data => {
-            const { url } = data
-            setImageUrl(url)
-          })
       })
   }, [])
+
+  useEffect(() => {
+    if (!fact) return
+    const firstWord = (fact.split(' ')[0])
+    fetch(`https://cataas.com/c/s/${firstWord}?json=true`)
+      .then(res => res.json())
+      .then(data => {
+        const { url } = data
+        setImageUrl(url)
+      })
+  }, [fact])
+
   return (
     <main>
       <h1>App de Gatos</h1>
