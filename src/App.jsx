@@ -22,8 +22,9 @@ export function App () {
     getFact()
   }, [])
 
-  function handleButtonClick () {
-    getFact()
+  const handleButtonClick = async () => {
+    const newFact = await getFact()
+    setFact(newFact)
   }
 
   useEffect(() => {
