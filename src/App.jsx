@@ -6,10 +6,16 @@ const CAT_PREFIX_IMAGE_URL = 'https://cataas.com/'
 export function App () {
   const [imageUrl, setImageUrl] = useState()
   const [fact, setFact] = useState()
+  const [factError, setFactError] = useState()
 
   function getFact () {
     fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then(res => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          setFactError('No se ha podido encontrar la cita')
+        }
+        return res.json()
+      })
       .then(data => {
         const { fact } = data
         setFact(fact)
