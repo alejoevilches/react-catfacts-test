@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
+import { getFact } from './services/facts'
 const CAT_ENDPOINT_RANDOM_FACT = 'https://catfact.ninja/fact'
 const CAT_PREFIX_IMAGE_URL = 'https://cataas.com/'
 
@@ -10,12 +11,7 @@ export function App () {
 
   function getFact () {
     fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then((res) => {
-        if (!res.ok) {
-          setFactError('No se ha podido encontrar la cita')
-        }
-        return res.json()
-      })
+      .then((res) => res.json())
       .then(data => {
         const { fact } = data
         setFact(fact)
