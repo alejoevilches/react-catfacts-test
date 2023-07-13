@@ -37,7 +37,7 @@ export function App () {
 
   return (
     <main>
-      <h1>Cat's app</h1>
+      <h1>Cats app</h1>
       {fact && <p>{fact}</p>}
       {imageUrl && <img src={`${CAT_PREFIX_IMAGE_URL}${imageUrl}`} alt='A photo of a random cat provided by the Cataas API' />}
       <button onClick={handleButtonClick}>New fact</button>

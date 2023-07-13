@@ -16,3 +16,9 @@ img{
     height:40vh;
     object-fit: cover;
 }
+
+button {
+    margin-top:20px;
+    width:250px;
+    height:25px;
+}
