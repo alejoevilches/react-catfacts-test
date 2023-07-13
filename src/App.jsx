@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 const CAT_ENDPOINT_RANDOM_FACT = 'https://catfact.ninja/fact'
+const CAT_PREFIX_IMAGE_URL='https://cataas.com/'
 
 export function App () {
   const [fact, setFact] = useState()
@@ -24,7 +25,7 @@ export function App () {
     <>
       <h1>App de Gatos</h1>
       {fact && <p>{fact}</p>}
-      {imageUrl && <img url={imageUrl} alt='A photo of a random cat provided by the Cataas API' />}
+      {imageUrl && <img src={`${CAT_PREFIX_IMAGE_URL}${imageUrl}`} alt='A photo of a random cat provided by the Cataas API' />}
     </>
   )
 }
