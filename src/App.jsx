@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { getFact } from './services/facts'
-const CAT_ENDPOINT_RANDOM_FACT = 'https://catfact.ninja/fact'
+import { getFact, getImage } from './services/facts'
 const CAT_PREFIX_IMAGE_URL = 'https://cataas.com/'
 
 export function App () {
   const [imageUrl, setImageUrl] = useState()
   const [fact, setFact] = useState()
-  const [factError, setFactError] = useState()
-
-  function getFact () {
-    fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then((res) => res.json())
-      .then(data => {
-        const { fact } = data
-        setFact(fact)
-      })
-  }
 
   useEffect(() => {
-    getFact()
+    getFact().then(fact => setFact(fact))
   }, [])
 
   const handleButtonClick = async () => {
@@ -30,12 +19,7 @@ export function App () {
   useEffect(() => {
     if (!fact) return
     const firstWord = (fact.split(' ')[0])
-    fetch(`https://cataas.com/c/s/${firstWord}?json=true`)
-      .then(res => res.json())
-      .then(data => {
-        const { url } = data
-        setImageUrl(url)
-      })
+    getImage(firstWord).then(url => setImageUrl(url))
   }, [fact])
 
   return (
